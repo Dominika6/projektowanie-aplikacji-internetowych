@@ -47,6 +47,4 @@ Routes:
         ◦ /reservationsList [ lista zarezerwowanych samochodów ]
         ◦ /modifyRent/id [ modyfikacja danej rezerwacji ]
         ◦ /cancelRent/id [ anulowanie danej rezerwacji ]
-
-        jeszcze nie zrobione:
-        ◦ /manage/id [ lista rezerwacji – możliwość potwierdzenia, modyfikacji, usunięcia ]
+        ◦ /confirmRent/id [ potwierdzenie danej rezerwacji ]

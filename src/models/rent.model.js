@@ -34,6 +34,13 @@ class RentModel {
         return affectedRows;
     }
 
+    confirmRent =  async (params, rentId) => {
+        const { columnSet, values } = multipleColumnSet(params)
+        const sql = `UPDATE ${this.tableName} SET confirm = ? WHERE rentId = ?`;
+        const result = await query(sql, [...values, rentId]);
+        return result;
+    }
+
 }
 
 module.exports = new RentModel;

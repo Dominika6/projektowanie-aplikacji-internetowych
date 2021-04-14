@@ -35,5 +35,6 @@ CREATE TABLE rents
      carId INT NOT NULL,
      fullPrice FLOAT NOT NULL,
      rentFrom date NOT NULL,
-     rentTo date NOT NULL
+     rentTo date NOT NULL,
+     confirm BOOLEAN DEFAULT 0 NOT NULL
 );

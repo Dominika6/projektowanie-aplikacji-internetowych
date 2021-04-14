@@ -10,8 +10,6 @@ router.post('/rent', createRentSchema, awaitHandlerFactory(rentController.create
 router.get('/reservationsList', auth(), awaitHandlerFactory(rentController.getReservationsList));
 router.post('/modifyRent/:id', auth(), awaitHandlerFactory(rentController.modifyRent));
 router.delete('/cancelRent/:id', auth(), awaitHandlerFactory(rentController.cancelRent));
-
-
-//  /manage/id [ lista rezerwacji – możliwość potwierdzenia, modyfikacji, usunięcia ]
+router.post('/confirmRent/:id', auth(), awaitHandlerFactory(rentController.confirmRent));
 
 module.exports = router;

@@ -53,6 +53,20 @@ class RentController {
         res.send('Rent has been deleted');
     };
 
+    confirmRent = async (req, res, next) => {
+            this.checkValidation(req);
+            await this.hashPassword(req);
+            const { confirm_password, ...restOfUpdates } = req.body;
+            const result = await RentModel.confirmRent(restOfUpdates, req.params.id);
+            if (!result) {
+                throw new HttpException(404, 'Something went wrong');
+            }
+            const { affectedRows, changedRows, info } = result;
+            const message = !affectedRows ? 'Rent not found' :
+                affectedRows && changedRows ? 'Rent confirmed successfully' : 'Updated faild';
+            res.send({ message, info });
+        };
+
     checkValidation = (req) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
