@@ -22,7 +22,7 @@ Baza Danych:
 
     • users ( userId, username, surname, email, password, role )
     • cars ( carId, carName, status, price, specifications )
-    • rents ( rentId, userId, carId, fullPrice, rentFrom, rentTo )
+    • rents ( rentId, userId, carId, fullPrice, rentFrom, rentTo, confirm )
 
 Routes: 
 
