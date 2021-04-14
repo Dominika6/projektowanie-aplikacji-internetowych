@@ -30,7 +30,6 @@ Routes:
 
         ◦ /registration [ rejestracja ]
         ◦ /login [ logowanie ]
-        ◦ /logout [ wylogowanie ]
         ◦ /myAccount [ dane zalogowanego użytkownika ]
 
 
@@ -38,13 +37,13 @@ Routes:
 
         ◦ /addCar [ dodawanie samochodu do bazy ]
         ◦ /availableCarList [ lista dostępnych samochodów w wybranym terminie ]
-        ◦ /carSpecifications/id	[ prezentacja ceny za dany okres czasu ]
+        ◦ /carSpecifications/:id [ prezentacja ceny za dany okres czasu ]
 
 
     •rents:
 
         ◦ /rent [ tworzenie rezerwacji ] -> problem ze sprawdzaniem czy żądani user i car istnieją
         ◦ /reservationsList [ lista zarezerwowanych samochodów ]
-        ◦ /modifyRent/id [ modyfikacja danej rezerwacji ]
-        ◦ /cancelRent/id [ anulowanie danej rezerwacji ]
-        ◦ /confirmRent/id [ potwierdzenie danej rezerwacji ]
+        ◦ /modifyRent/:id [ modyfikacja danej rezerwacji ]
+        ◦ /cancelRent/:id [ anulowanie danej rezerwacji ]
+        ◦ /confirmRent/:id [ potwierdzenie danej rezerwacji ]

@@ -9,5 +9,6 @@ const { createCarSchema } = require('../middleware/validators/userValidator.midd
 router.post('/addCar', createCarSchema, awaitHandlerFactory(carController.createCar));
 router.get('/getAvailableCarList', auth() , awaitHandlerFactory(carController.getAvailableCarList));
 router.get('/carSpecifications/:carId', auth(), awaitHandlerFactory(carController.getCarById));
+// /updateStatus ?
 
 module.exports = router;
