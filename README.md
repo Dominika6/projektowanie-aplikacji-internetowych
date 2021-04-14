@@ -44,10 +44,9 @@ Routes:
     •rents:
 
         ◦ /rent [ tworzenie rezerwacji ] -> problem ze sprawdzaniem czy żądani user i car istnieją
+        ◦ /reservationsList [ lista zarezerwowanych samochodów ]
+        ◦ /modifyRent/id [ modyfikacja danej rezerwacji ]
+        ◦ /cancelRent/id [ anulowanie danej rezerwacji ]
 
         jeszcze nie zrobione:
-
-        ◦ /reservationsList [ lista zarezerwowanych samochodów ]
-        ◦ /modifyRents/id [ modyfikacja danej rezerwacji ]
-        ◦ /cancelRents/id [ anulowanie danej rezerwacji ]
         ◦ /manage/id [ lista rezerwacji – możliwość potwierdzenia, modyfikacji, usunięcia ]
