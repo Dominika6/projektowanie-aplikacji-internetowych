@@ -7,8 +7,9 @@ const awaitHandlerFactory = require('../middleware/awaitHandlerFactory.middlewar
 const { createCarSchema } = require('../middleware/validators/userValidator.middleware');
 
 router.post('/addCar', createCarSchema, awaitHandlerFactory(carController.createCar));
-router.get('/getAvailableCarList', auth() , awaitHandlerFactory(carController.getAvailableCarList));
-router.get('/carSpecifications/:carId', auth(), awaitHandlerFactory(carController.getCarById));
+router.get('/getAvailableCarList', awaitHandlerFactory(carController.getAvailableCarList));
+router.get('/carSpecifications/:carId', awaitHandlerFactory(carController.getCarById));
+// router.get('/carSpecifications/:carId', auth(), awaitHandlerFactory(carController.getCarById));
 // /updateStatus ?
 
 module.exports = router;

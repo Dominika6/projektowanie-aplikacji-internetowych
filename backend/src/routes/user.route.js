@@ -8,7 +8,10 @@ const { createUserSchema, validateLogin } = require('../middleware/validators/us
 
 router.post('/registration', createUserSchema, awaitHandlerFactory(userController.createUser));
 router.post('/login', validateLogin, awaitHandlerFactory(userController.userLogin));
-router.get('/myAccount', auth(), awaitHandlerFactory(userController.getCurrentUser));
+router.get('/myAccount', awaitHandlerFactory(userController.getCurrentUser));
+router.get('/getUsersList', awaitHandlerFactory(userController.getUsersList));
+
+// router.get('/myAccount', auth(), awaitHandlerFactory(userController.getCurrentUser));
 
 
 module.exports = router;

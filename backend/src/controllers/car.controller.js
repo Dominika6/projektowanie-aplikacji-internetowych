@@ -25,6 +25,7 @@ class CarController {
             const { password, ...carWithoutPassword } = car;
             return carWithoutPassword;
         });
+        // console.log("car list: ", carList)
         res.send(carList);
     };
 

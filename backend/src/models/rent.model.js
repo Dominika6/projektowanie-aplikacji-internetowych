@@ -20,6 +20,58 @@ class RentModel {
         return await query(sql, [...values]);
     }
 
+    findRent = async (params) => {
+        const { columnSet, values } = multipleColumnSet(params)
+        const sql = `SELECT * FROM ${this.tableName}
+        WHERE ${columnSet}`;
+        const result = await query(sql, [...values]);
+        return result[0];
+    }
+
+    getUnconfirmedRentsList = async (params = {}) => {
+        let sql = `SELECT * FROM ${this.tableName} WHERE confirm = 0`;
+        if (!Object.keys(params).length) {
+            return await query(sql);
+        }
+        const { columnSet, values } = multipleColumnSet(params)
+        sql += ` WHERE ${columnSet}`;
+
+        return await query(sql, [...values]);
+    }
+
+
+    getConfirmedRentsList = async (params = {}) => {
+        let sql = `SELECT * FROM ${this.tableName} WHERE confirm = 1`;
+        if (!Object.keys(params).length) {
+            return await query(sql);
+        }
+        const { columnSet, values } = multipleColumnSet(params)
+        sql += ` WHERE ${columnSet}`;
+
+        return await query(sql, [...values]);
+    }
+
+
+
+    checkDate = async (params, checkTo, checkFrom) => {
+        // const sql = `SELECT * FROM ${this.tableName} WHERE ('${checkTo}' <= rentFrom) OR (rentTo <= '${checkFrom}') `;
+        // let sql = `SELECT * FROM ${this.tableName} WHERE ('${checkFrom}' <= '${checkTo}') AND (('${checkTo}' <= rentFrom) OR (rentTo <= '${checkFrom}')) `;
+        const sql = `select * from rents where ((rentTo >= '${checkFrom}') AND (rentFrom <= '${checkFrom}')) 
+                       OR ((rentFrom <= '${checkTo}') AND (rentTo >= '${checkTo}')) 
+                       OR ((rentFrom <= '${checkFrom}') AND (rentTo >= '${checkTo}'))
+                       OR ('${checkFrom}' <= rentFrom) AND (rentTo <= '${checkTo}');`
+        // console.log(sql);
+        const result = await query(sql, [checkTo, checkFrom]);
+
+        if (!Object.keys(params).length) {
+            return await query(sql);
+        }
+        const { columnSet, values } = multipleColumnSet(params)
+        // sql += ` WHERE ${columnSet} `;
+        // return sql;
+        return await query(sql, [...values]);
+    }
+
     modifyRent =  async (params, rentId) => {
         const { columnSet, values } = multipleColumnSet(params)
         const sql = `UPDATE ${this.tableName} SET ${columnSet} WHERE rentId = ?`;
@@ -36,7 +88,7 @@ class RentModel {
 
     confirmRent =  async (params, rentId) => {
         const { columnSet, values } = multipleColumnSet(params)
-        const sql = `UPDATE ${this.tableName} SET confirm = ? WHERE rentId = ?`;
+        const sql = `UPDATE ${this.tableName} SET confirm = 1 WHERE rentId = ?`;
         const result = await query(sql, [...values, rentId]);
         return result;
     }

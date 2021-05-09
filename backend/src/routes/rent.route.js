@@ -8,9 +8,13 @@ const Role = require("../utils/userRoles.utils");
 const { createRentSchema } = require('../middleware/validators/userValidator.middleware');
 
 router.post('/rent', createRentSchema, awaitHandlerFactory(rentController.createRent));
-router.get('/reservationsList', auth(), awaitHandlerFactory(rentController.getReservationsList));
-router.post('/modifyRent/:id', auth(), awaitHandlerFactory(rentController.modifyRent));
-router.delete('/cancelRent/:id', auth(), awaitHandlerFactory(rentController.cancelRent));
-router.post('/confirmRent/:id', auth(Role.Admin), awaitHandlerFactory(rentController.confirmRent));
+router.post('/checkDate/:checkTo/:checkFrom', awaitHandlerFactory(rentController.checkDate));
+router.get('/reservationsList', awaitHandlerFactory(rentController.getReservationsList));
+router.get('/getUnconfirmedRentsList', awaitHandlerFactory(rentController.getUnconfirmedRentsList));
+router.get('/getConfirmedRentsList', awaitHandlerFactory(rentController.getConfirmedRentsList));
+router.get('/findRent/:rentId', awaitHandlerFactory(rentController.findRent));
+router.post('/modifyRent/:rentId', awaitHandlerFactory(rentController.modifyRent));
+router.delete('/cancelRent/:rentId', awaitHandlerFactory(rentController.cancelRent));
+router.post('/confirmRent/:rentId', awaitHandlerFactory(rentController.confirmRent));
 
 module.exports = router;

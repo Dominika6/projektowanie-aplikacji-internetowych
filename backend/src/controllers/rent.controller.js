@@ -17,10 +17,45 @@ class RentController {
         res.status(201).send('Rent was created!');
     };
 
+
+    getUnconfirmedRentsList = async (req, res, next) => {
+        let rentList = await RentModel.getUnconfirmedRentsList();
+        if (!rentList.length) {
+            return('Rents not found');
+        }
+        rentList = rentList.map(rent => {
+            const { password, ...rentWithoutPassword } = rent;
+            return rentWithoutPassword;
+        });
+        res.send(rentList);
+    };
+
+    getConfirmedRentsList = async (req, res, next) => {
+        let rentList = await RentModel.getConfirmedRentsList();
+        if (!rentList.length) {
+            return('Rents not found');
+        }
+        rentList = rentList.map(rent => {
+            const { password, ...rentWithoutPassword } = rent;
+            return rentWithoutPassword;
+        });
+        res.send(rentList);
+    };
+
+    findRent = async (req, res, next) => {
+        const rent = await RentModel.findRent({ rentId: req.params.rentId });
+        if (!rent) {
+            return ('Rent not found');
+        }
+        const { password, ...rentWithoutPassword } = rent;
+        res.send(rentWithoutPassword);
+    };
+
+
     getReservationsList = async (req, res, next) => {
         let rentList = await RentModel.getReservationsList();
         if (!rentList.length) {
-            throw new HttpException(404, 'Rents not found');
+            return('Rents not found');
         }
 
         rentList = rentList.map(rent => {
@@ -31,11 +66,27 @@ class RentController {
         res.send(rentList);
     };
 
+    checkDate = async (req, res, next) => {
+        this.checkValidation(req);
+        await this.hashPassword(req);
+        const { confirm_password, ...restOfUpdates } = req.body;
+        let rentList = await RentModel.checkDate(restOfUpdates, req.params.checkTo, req.params.checkFrom);
+
+        rentList = rentList.map(rent => {
+            const { password, ...rentWithoutPassword } = rent;
+            return rentWithoutPassword;
+        });
+        if (!rentList.length) {
+            rentList ='';
+        }
+        res.send(rentList);
+    };
+
     modifyRent = async (req, res, next) => {
         this.checkValidation(req);
         await this.hashPassword(req);
         const { confirm_password, ...restOfUpdates } = req.body;
-        const result = await RentModel.modifyRent(restOfUpdates, req.params.id);
+        const result = await RentModel.modifyRent(restOfUpdates, req.params.rentId);
         if (!result) {
             throw new HttpException(404, 'Something went wrong');
         }
@@ -46,9 +97,9 @@ class RentController {
     };
 
     cancelRent = async (req, res, next) => {
-        const result = await RentModel.cancelRent(req.params.id);
+        const result = await RentModel.cancelRent(req.params.rentId);
         if (!result) {
-            throw new HttpException(404, 'Rent not found');
+            return('Rent not found');
         }
         res.send('Rent has been deleted');
     };
@@ -57,7 +108,7 @@ class RentController {
             this.checkValidation(req);
             await this.hashPassword(req);
             const { confirm_password, ...restOfUpdates } = req.body;
-            const result = await RentModel.confirmRent(restOfUpdates, req.params.id);
+            const result = await RentModel.confirmRent(restOfUpdates, req.params.rentId);
             if (!result) {
                 throw new HttpException(404, 'Something went wrong');
             }
